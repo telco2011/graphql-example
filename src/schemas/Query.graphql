@@ -1,0 +1,4 @@
+type Query {
+  author(firstName: String, lastName: String): Author
+  getFortunerCookie: String
+}
