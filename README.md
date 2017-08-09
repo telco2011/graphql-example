@@ -58,3 +58,19 @@ and hit the play button (cmd-return), then you should get this on the right side
   getFortunerCookie
 }
 ```
+
+```
+mutation {
+  createPost(post: {
+    id: 20
+    title: "Mutated Post"
+    text: "Mutation text"
+    views: 0
+    authorId: 236
+  }) {
+    title
+  }
+}
+```
+## HandleErrors
+https://medium.com/@tarkus/validation-and-user-errors-in-graphql-mutations-39ca79cd00bf

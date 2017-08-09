@@ -1,0 +1,7 @@
+input PostInput {
+  id: Int
+  title: String
+  text: String
+  views: Int
+  authorId: Int
+}

@@ -23,6 +23,19 @@ const blogResolver = {
             .then((view) => view.views);
     },
   },
+  Mutation: {
+    createPost(_, { post }) {
+      console.log(post);
+      Author.findById(post.authorId).then((author) => {
+        if (!author) {
+          console.log('Author with id', post.authorId, 'not founded.');
+        } else {
+          console.log('Author', author, 'founded.');
+        }
+      });
+      return post;
+    },
+  },
 };
 
 export default blogResolver;
