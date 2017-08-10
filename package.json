@@ -17,7 +17,7 @@
   ],
   "author": "David Lopez <davidlopez.david@gmail.com>",
   "dependencies": {
-    "apollo-server-express": "^1.0.2",
+    "apollo-server-express": "^1.1.0",
     "body-parser": "^1.17.2",
     "casual": "^1.5.14",
     "express": "^4.15.4",
@@ -41,7 +41,7 @@
     "eslint": "^4.4.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-react": "^7.2.0",
     "nodemon": "^1.9.1"
   },
   "eslintConfig": {
