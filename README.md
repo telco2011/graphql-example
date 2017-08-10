@@ -1,12 +1,5 @@
-# apollo-tutorial-kit (formerly apollo-starter-kit)
-
-Starting point for the Apollo GraphQL Server tutorial.
-
-See also [Tutorial: How to build a GraphQL server](https://medium.com/apollo-stack/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs) and the solution in the `server-tutorial-solution` branch of this repo.
-
-Up-to-date documentation and explanations for Apollo Server can be found on [docs.apollostack.com](http://dev.apollodata.com/tools/apollo-server/index.html)
-
-## Getting started
+# GraphQL Example
+This project is based in apollo-tutorial-kit (formerly apollo-starter-kit), the starting point for the Apollo GraphQL Server tutorial. See also [Tutorial: How to build a GraphQL server](https://medium.com/apollo-stack/tutorial-building-a-graphql-server-cddaa023c035#.wy5h1htxs) and the solution in the `server-tutorial-solution` branch of this repo.
 
 ```sh
 git clone https://github.com/apollostack/apollo-starter-kit
@@ -14,28 +7,19 @@ cd apollo-starter-kit
 npm install
 npm run start
 ```
+## Dependencies
+- A MongoDB connnection is necessary. 
 
-Then open [http://localhost:3000/graphiql](http://localhost:3000/graphql)
-
-When you paste this on the left side of the page:
-
+## Build and run
+- To install
+```sh
+npm install & npm start
 ```
-{
-  testString
-}
-```
+- GraphQL will be running on http://localhost:${GRAPHQL_PORT}/graphql
+- GraphiQL will be running on http://localhost:${GRAPHQL_PORT}/graphiql
 
-and hit the play button (cmd-return), then you should get this on the right side:
-
-```json
-{
-  "data": {
-    "testString": "It works!"
-  }
-}
-```  
-
-## GraphQL queries
+## Test
+- GraphQL queries to execute with GraphiQL
 ```
 {
   author(firstName:"Edmond", lastName: "Jones"){
