@@ -56,5 +56,7 @@ mutation {
   }
 }
 ```
+# Other resources
 ## HandleErrors
 https://medium.com/@tarkus/validation-and-user-errors-in-graphql-mutations-39ca79cd00bf
+https://github.com/kriasoft/nodejs-api-starter
