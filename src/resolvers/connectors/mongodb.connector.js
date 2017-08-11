@@ -1,7 +1,12 @@
 import Mongoose from 'mongoose';
-import casual from 'casual';
 
-const mongo = Mongoose.connect('mongodb://localhost/views');
+// mongodb real connection
+// const mongodbURL = 'mongodb://localhost/views';
+
+// mongodb in-memory connection
+const mongodbURL = 'mongodb://localhost:8000/myMongoInMemory';
+
+Mongoose.connect(mongodbURL);
 
 const ViewSchema = Mongoose.Schema({
   postId: Number,
@@ -10,4 +15,4 @@ const ViewSchema = Mongoose.Schema({
 
 const View = Mongoose.model('view', ViewSchema);
 
-export { View };
+export default View;

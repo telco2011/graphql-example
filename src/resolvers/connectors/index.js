@@ -1,7 +1,7 @@
 import casual from 'casual';
 import _ from 'lodash';
 
-import { View } from './mongodb.connector';
+import View from './mongodb.connector';
 import { Author, AuthorModel, Post, db } from './sqlite.connector';
 import { FortuneCookie } from './rest.connector';
 
