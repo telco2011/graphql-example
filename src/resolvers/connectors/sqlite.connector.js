@@ -1,8 +1,10 @@
 import Sequelize from 'sequelize';
+import { SequelizeLogger } from '../../logger/Logger';
 
 const db = new Sequelize('blog', null, null, {
   dialect: 'sqlite',
   storage: './src/data/blog.sqlite',
+  logging: SequelizeLogger,
 });
 
 const AuthorModel = db.define('author', {

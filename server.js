@@ -1,30 +1,43 @@
+import dotenv from 'dotenv';
 import express from 'express';
+import fs from 'fs';
+import morgan from 'morgan';
+import path from 'path';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { printSchema } from 'graphql';
 import bodyParser from 'body-parser';
 import schema from './src/index';
+import Logger from './src/logger/Logger';
+
 // mongodb in-memory connection
 // only in DEV environment
 import MongoInMemory from 'mongo-in-memory';
 
-const mongoInMemoryServer = new MongoInMemory(8000);
+const logger = Logger.WinstonLogger;
+
+const mongoInMemoryServer = new MongoInMemory(process.env.MONGO_IN_MEMORY_PORT || 8000);
 mongoInMemoryServer.start((error, config) => {
   if (error) {
-    console.error(error);
+    logger.error(error);
   } else {
-    console.log('MONGO-IN-MEMORY-URL:', mongoInMemoryServer.getMongouri('myMongoInMemory'));
+    logger.debug('MONGO-IN-MEMORY-URL:', mongoInMemoryServer.getMongouri('myMongoInMemory'));
   }
 });
 
-const GRAPHQL_PORT = 3000;
+// Load environment variables
+dotenv.load();
+
+const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 3000;
 
 const graphQLServer = express();
+
+graphQLServer.use(morgan('combined', { stream: (fs.createWriteStream(path.join(__dirname, Logger.logPath, 'access.log'), { flags: 'a' })) }));
 
 graphQLServer.get('/graphql/schema', (req, res) => {
   res.type('text/plain').send(printSchema(schema));
 });
 
-graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress(req => ({
+graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress(({
   schema,
   formatError: error => ({
     message: error.message,
@@ -33,17 +46,23 @@ graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress(req => ({
     path: error.path,
   }),
 })));
-graphQLServer.use('/graphiql', graphiqlExpress(req => ({
-  formatError: error => ({
-    message: error.message,
-    state: error.originalError && error.originalError.state,
-    locations: error.locations,
-    path: error.path,
-  }),
-  endpointURL: '/graphql',
-})));
+graphQLServer.use('/graphiql', graphiqlExpress(({ endpointURL: '/graphql' })));
 
-graphQLServer.listen(GRAPHQL_PORT, () => console.log(
+graphQLServer.listen(GRAPHQL_PORT, () => logger.info(
   `GraphQL is now running on http://localhost:${GRAPHQL_PORT}/graphql`,
   `\nGraphiQL is now running on http://localhost:${GRAPHQL_PORT}/graphiql`,
 ));
+
+// Shutdown Node.js app gracefully
+function handleExit() {
+  logger.info('Closing mongoInMemoryServer.');
+  mongoInMemoryServer.stop((error) => {
+    if (error) {
+      logger.error(error);
+    } else {
+      process.exit();
+    }
+  });
+}
+
+process.on('exit', handleExit.bind());
