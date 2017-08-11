@@ -26,23 +26,25 @@ const blogResolver = {
   Mutation: {
     createPost(_, { post }) {
       let errors = [];
-      console.log(post);
-      Author.findById(post.authorId).then((author) => {
+      return Author.findById(post.authorId).then((author) => {
         if (!author) {
-          console.log('Author with id', post.authorId, 'not founded.');
-          console.log('ERRORS BEFORE:', errors.length);
-          errors.push({ key: 'password', message: 'The password filed must not be empty.' });
-          console.log('ERRORS AFTER:', errors.length);
-        } else {
-          console.log('Author', author, 'founded.');
-        }
-      }).then(() => {
-        if (errors.length > 0) {
-          console.log('THROW:', errors);
+          errors.push({ key: 'authorId', message: `Author with id ${post.authorId} not founded.` });
           throw new ValidationError(errors);
+        } else {
+          console.log(`Author ${JSON.stringify(author)} founded.`);
+          return author.createPost({
+            title: post.title,
+            text: post.text,
+          }).then((mongoDBpost) => {
+            return View.update(
+              { postId: mongoDBpost.id },
+              { views: 0 },
+              { upsert: true },
+            ).then(() => {
+              return mongoDBpost;
+            });
+          });
         }
-        console.log('END');
-        return post;
       });
     },
   },
