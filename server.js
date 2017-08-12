@@ -18,9 +18,9 @@ const logger = Logger.WinstonLogger;
 const mongoInMemoryServer = new MongoInMemory(process.env.MONGO_IN_MEMORY_PORT || 8000);
 mongoInMemoryServer.start((error, config) => {
   if (error) {
-    logger.error(error);
+    logger.error(`Error starting mongoInMemoryServer ${error}`);
   } else {
-    logger.debug('MONGO-IN-MEMORY-URL:', mongoInMemoryServer.getMongouri('myMongoInMemory'));
+    logger.info(`MONGO-IN-MEMORY-URL: ${mongoInMemoryServer.getMongouri('myMongoInMemory')}`);
   }
 });
 
@@ -55,10 +55,10 @@ graphQLServer.listen(GRAPHQL_PORT, () => logger.info(
 
 // Shutdown Node.js app gracefully
 function handleExit() {
-  logger.info('Closing mongoInMemoryServer.');
+  logger.warn('Closing mongoInMemoryServer.');
   mongoInMemoryServer.stop((error) => {
     if (error) {
-      logger.error(error);
+      logger.error(`Error stopping mongoInMemoryServer ${error}`);
     } else {
       process.exit();
     }
