@@ -1,6 +1,10 @@
 // Environment imports
 import dotenv from 'dotenv';
 
+// Apollo imports
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { printSchema } from 'graphql';
+
 // Middleware imports
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -14,28 +18,15 @@ import path from 'path';
 import PrettyError from 'pretty-error';
 import printRoutes from './src/utils/document';
 
-// Apollo imports
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import { printSchema } from 'graphql';
-
 // Application imports
 import schema from './src/index';
 import Logger from './src/logger/Logger';
 
-// Configure mongodb in-memory connection
-// only in DEV environment
-import MongoInMemory from 'mongo-in-memory';
+import MongoInMemory from './src/data/in-memory-db/mongodb.in-memory';
 
 const logger = Logger.WinstonLogger;
 
-const mongoInMemoryServer = new MongoInMemory(process.env.MONGO_IN_MEMORY_PORT || 8000);
-mongoInMemoryServer.start((error, config) => {
-  if (error) {
-    logger.error(`Error starting mongoInMemoryServer ${error}`);
-  } else {
-    logger.info(`MONGO-IN-MEMORY-URL: ${mongoInMemoryServer.getMongouri('myMongoInMemory')}`);
-  }
-});
+MongoInMemory.start();
 
 // Load environment variables
 dotenv.load();
@@ -98,14 +89,7 @@ graphQLServer.use((err, req, res, next) => {
 });
 // Shutdown Node.js app gracefully
 function handleExit() {
-  logger.info('Closing mongoInMemoryServer.');
-  mongoInMemoryServer.stop((error) => {
-    if (error) {
-      logger.error(`Error stopping mongoInMemoryServer ${error}`);
-    } else {
-      process.exit();
-    }
-  });
+  MongoInMemory.stop();
 }
 
 process.on('exit', handleExit.bind());
