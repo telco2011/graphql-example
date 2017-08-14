@@ -28,7 +28,7 @@ const logger = Logger.WinstonLogger;
 
 if (process.env.NODE_ENV !== 'production') {
   MongoInMemoryServer.init(process.env.MONGO_IN_MEMORY_PORT || 8000);
-  MongoInMemoryServer.start().then((response) => { console.log(`THEN ${response}`); });
+  MongoInMemoryServer.start().then((response) => { logger.info(`MongoInMemoryServer started ${response}`); });
 }
 
 // Load environment variables
