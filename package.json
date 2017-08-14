@@ -7,6 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },
+  "homepage": "https://github.com/telco2011/graphql-example",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telco2011/graphql-example"
+  },
+  "license": "Apache 2.0",
   "keywords": [
     "Node.js",
     "Javascript",
