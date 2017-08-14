@@ -98,7 +98,7 @@ graphQLServer.use((err, req, res, next) => {
 });
 // Shutdown Node.js app gracefully
 function handleExit() {
-  logger.warn('Closing mongoInMemoryServer.');
+  logger.info('Closing mongoInMemoryServer.');
   mongoInMemoryServer.stop((error) => {
     if (error) {
       logger.error(`Error stopping mongoInMemoryServer ${error}`);
@@ -109,3 +109,4 @@ function handleExit() {
 }
 
 process.on('exit', handleExit.bind());
+process.on('SIGINT', handleExit.bind());
