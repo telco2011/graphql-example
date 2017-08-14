@@ -7,8 +7,6 @@ cd apollo-starter-kit
 npm install
 npm run start
 ```
-## Dependencies
-- A MongoDB connnection is necessary. 
 
 ## Build and run
 - To install
@@ -46,17 +44,17 @@ npm install & npm start
 ```
 mutation {
   createPost(post: {
-    id: 20
     title: "Mutated Post"
     text: "Mutation text"
-    views: 0
-    authorId: 236
+    authorId: 2
   }) {
-    title
+    id
+  	title
+  	text
+  	views
+  	author {
+  	  id
+  	}
   }
 }
 ```
-# Other resources
-## HandleErrors
-https://medium.com/@tarkus/validation-and-user-errors-in-graphql-mutations-39ca79cd00bf
-https://github.com/kriasoft/nodejs-api-starter

@@ -17,6 +17,7 @@ import fs from 'fs';
 import path from 'path';
 import PrettyError from 'pretty-error';
 import printRoutes from './src/utils/document';
+import packageJson from './package.json';
 
 // Application imports
 import schema from './src/index';
@@ -54,7 +55,7 @@ graphQLServer.use(
 graphQLServer.use(cookieParser());
 graphQLServer.use(bodyParser.urlencoded({ extended: true }));
 graphQLServer.use(bodyParser.json());
-graphQLServer.use(morgan('combined', { stream: (fs.createWriteStream(path.join(__dirname, Logger.logPath, 'access.log'), { flags: 'a' })) }));
+graphQLServer.use(morgan('combined', { stream: (fs.createWriteStream(path.join(Logger.logPath, `${packageJson.name}-access.log`), { flags: 'a' })) }));
 
 // Express Middleware configuration
 graphQLServer.get('/graphql/schema', (req, res) => {
