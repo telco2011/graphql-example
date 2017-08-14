@@ -1,4 +1,7 @@
+import dotenv from 'dotenv';
 import Mongoose from 'mongoose';
+
+dotenv.load();
 
 const databaseName = process.env.MONGODB_DATABASE_NAME;
 

@@ -22,11 +22,14 @@ import printRoutes from './src/utils/document';
 import schema from './src/index';
 import Logger from './src/logger/Logger';
 
-import MongoInMemory from './src/data/in-memory-db/mongodb.in-memory';
+import MongoInMemoryServer from './src/data/in-memory-db/mongodb.in-memory';
 
 const logger = Logger.WinstonLogger;
 
-MongoInMemory.start();
+if (process.env.NODE_ENV !== 'production') {
+  MongoInMemoryServer.init(process.env.MONGO_IN_MEMORY_PORT || 8000);
+  MongoInMemoryServer.start().then((response) => { console.log(`THEN ${response}`); });
+}
 
 // Load environment variables
 dotenv.load();
@@ -89,7 +92,9 @@ graphQLServer.use((err, req, res, next) => {
 });
 // Shutdown Node.js app gracefully
 function handleExit() {
-  MongoInMemory.stop();
+  if (process.env.NODE_ENV !== 'production') {
+    MongoInMemoryServer.stop();
+  }
 }
 
 process.on('exit', handleExit.bind());

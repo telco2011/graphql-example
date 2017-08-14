@@ -3,31 +3,34 @@ import MongoInMemory from 'mongo-in-memory';
 
 const logger = Logger.WinstonLogger;
 
-class MongoInMemoryServer {
-  constructor() {
-    this.mongoInMemoryServer = new MongoInMemory(process.env.MONGO_IN_MEMORY_PORT || 8000);
-  }
+let mongoInMemoryObj = '';
 
-  start() {
-    this.mongoInMemoryServer.start().then((response) => {
-      if (response.host) {
-        logger.info(`MONGO-IN-MEMORY-URL: ${this.mongoInMemoryServer.getMongouri('myMongoInMemory')}`);
-      } else {
-        logger.error(`Error starting mongoInMemoryServer ${JSON.stringify(response)}`);
-      }
+const MongoInMemoryServer = {
+  init: (port) => { mongoInMemoryObj = new MongoInMemory(port); },
+  start: () => {
+    return new Promise((resolve, reject) => {
+      logger.info('Starting mongoInMemoryServer');
+      mongoInMemoryObj.start().then((response) => {
+        if (response.host) {
+          logger.info(`MONGO-IN-MEMORY-URL: ${mongoInMemoryObj.getMongouri('myMongoInMemory')}`);
+          resolve(true);
+        } else {
+          logger.error(`Error starting mongoInMemoryServer ${JSON.stringify(response)}`);
+          reject(false);
+        }
+      });
     });
-  }
-
-  stop() {
+  },
+  stop: () => {
     logger.info('Closing mongoInMemoryServer.');
-    this.mongoInMemoryServer.stop().then((error) => {
+    mongoInMemoryObj.stop().then((error) => {
       if (error) {
         logger.error(`Error stopping mongoInMemoryServer ${error}`);
       } else {
         process.exit();
       }
     });
-  }
-}
+  },
+};
 
 export default MongoInMemoryServer;
