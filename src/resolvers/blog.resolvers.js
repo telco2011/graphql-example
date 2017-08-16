@@ -1,4 +1,4 @@
-import { Author, View, FortuneCookie } from './connectors';
+import { Author, Post, View, FortuneCookie } from './connectors';
 import Logger from '../logger/Logger';
 
 import { addPost } from './mutations';
@@ -7,6 +7,14 @@ const logger = Logger.WinstonLogger;
 
 const blogResolver = {
   Query: {
+    authors() {
+      logger.debug('Get all authors.');
+      return Author.findAll();
+    },
+    posts() {
+      logger.debug('Get all posts');
+      return Post.findAll();
+    },
     author(_, args) {
       logger.debug(`Finiding author with arguments ${JSON.stringify(args)}`);
       return Author.find({ where: args });
