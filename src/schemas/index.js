@@ -1,9 +1,9 @@
 import schema from './schema.graphql';
+import Post from './Post.graphql';
+import Author from './Author.graphql';
+import PostInput from './PostInput.graphql';
 import Mutation from './Mutation.graphql';
 import Query from './Query.graphql';
-import Author from './Author.graphql';
-import Post from './Post.graphql';
-import PostInput from './PostInput.graphql';
 
 const typeDefs = [
   schema,
@@ -11,7 +11,7 @@ const typeDefs = [
   Query,
   PostInput,
   Author,
-  Post
+  Post,
 ];
 
 export default typeDefs;

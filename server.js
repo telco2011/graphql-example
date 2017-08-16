@@ -40,7 +40,7 @@ dotenv.load();
 
 // Assign environment constants
 const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 3000;
-const CORS_ORIGIN = process.env.CORS_ORIGIN;
+const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:4200';
 
 // Load express
 const graphQLServer = express();
@@ -52,7 +52,7 @@ graphQLServer.use(
       const whitelist = CORS_ORIGIN ? CORS_ORIGIN.split(',') : [];
       cb(null, whitelist.includes(origin));
     },
-    credentials: true,
+    credentials: false,
   }),
 );
 graphQLServer.use(cookieParser());
