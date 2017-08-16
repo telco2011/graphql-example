@@ -6,9 +6,10 @@ const logger = Logger.WinstonLogger;
 let mongoInMemoryObj = '';
 
 const MongoInMemoryServer = {
-  init: (port) => { mongoInMemoryObj = new MongoInMemory(port); },
-  start: () => {
+  start: (port) => {
     return new Promise((resolve, reject) => {
+      logger.info(`Initialazing mongoInMemoryServer on port ${port}`);
+      mongoInMemoryObj = new MongoInMemory(port);
       logger.info('Starting mongoInMemoryServer');
       mongoInMemoryObj.start().then((response) => {
         if (response.host) {

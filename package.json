@@ -7,6 +7,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },
+  "homepage": "https://github.com/telco2011/graphql-example",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telco2011/graphql-example"
+  },
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
   "keywords": [
     "Node.js",
     "Javascript",
@@ -26,13 +37,13 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "graphql": "^0.10.0",
-    "graphql-tools": "^1.0.0",
+    "graphql-tools": "^1.2.0",
     "lodash": "^4.17.4",
-    "mongoose": "^4.11.6",
+    "mongoose": "^4.11.7",
     "morgan": "^1.8.2",
     "node-fetch": "^1.7.2",
     "pretty-error": "^2.1.1",
-    "sequelize": "^4.4.2",
+    "sequelize": "^4.5.0",
     "sqlite3": "^3.1.9",
     "winston": "^2.3.1"
   },
@@ -48,7 +59,7 @@
     "eslint": "^4.4.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-react": "^7.2.0",
+    "eslint-plugin-react": "^7.2.1",
     "mongo-in-memory": "0.0.5",
     "nodemon": "^1.9.1"
   },

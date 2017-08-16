@@ -27,9 +27,12 @@ import MongoInMemoryServer from './src/data/in-memory-db/mongodb.in-memory';
 
 const logger = Logger.WinstonLogger;
 
+logger.debug(`Application running with NODE_ENV=${process.env.NODE_ENV}.`);
+
 if (process.env.NODE_ENV !== 'production') {
-  MongoInMemoryServer.init(process.env.MONGO_IN_MEMORY_PORT || 8000);
-  MongoInMemoryServer.start().then((response) => { logger.info(`MongoInMemoryServer started ${response}`); });
+  MongoInMemoryServer.start(process.env.MONGO_IN_MEMORY_PORT || 8000).then((res) => {
+    logger.info(`MongoInMemoryServer started ${res}`);
+  });
 }
 
 // Load environment variables
