@@ -1,0 +1,16 @@
+<h1>GraphQL example</h1>
+<h2>Posts</h2>
+<ul *ngFor="let post of posts | async | select: 'posts'">
+  <li>Title: {{ post.title }}</li>
+  <li>Author: {{ post.author.firstName }}</li>
+</ul>
+<h2>Authors</h2>
+<ul *ngFor="let author of authors | async | select: 'authors'">
+  <li>ID: {{ author.id }}</li>
+  <li>FirstName: {{ author.fistName }}</li>
+  <li>LastName: {{ author.lastName }}</li>
+  <ul *ngFor="let post of author.posts">
+    <li>Title: {{ post.title }}</li>
+    <li>Text: {{ post.text }}</li>
+  </ul>
+</ul>
