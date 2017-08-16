@@ -26,6 +26,23 @@ const WinstonLogger = new (winston.Logger)({
   ],
 });
 
+const MongoDBLogger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.Console)({ level: process.env.STANDARD_LOG_LEVEL || defaultLogLevel }),
+    new (winston.transports.File)({
+      filename: `${basePath}/${packageJson.name}-mongodb.log`,
+      level: process.env.STANDARD_LOG_LEVEL || defaultLogLevel,
+    }),
+  ],
+  exceptionHandlers: [
+    new (winston.transports.Console)({ level: process.env.STANDARD_LOG_LEVEL || defaultLogLevel }),
+    new (winston.transports.File)({
+      filename: `${basePath}/${packageJson.name}-exceptions.log`,
+      level: process.env.EXCEPTION_LOG_LEVEL || defaultLogLevel,
+    }),
+  ],
+});
+
 const SQLLogger = new (winston.Logger)({
   transports: [
     new (winston.transports.File)({
@@ -37,6 +54,7 @@ const SQLLogger = new (winston.Logger)({
 
 const Logger = {
   WinstonLogger,
+  MongoDBLogger,
   logPath: basePath,
 };
 
